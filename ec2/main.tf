@@ -41,7 +41,7 @@ resource "aws_instance" "my-ec2" {
   security_groups = [aws_security_group.ec2-sg.name]
   instance_type   = var.ec2_type
   ami             = var.ec2_ami_id
-  user_data = file("test.sh") #test
+  user_data = replace(file("test.sh"), "\r\n", "\n") # when tf run on windows #user_data = file("test.sh") # when tf run on linux
   root_block_device {
     volume_size = var.ec2_volume_size
     volume_type = "gp3"
